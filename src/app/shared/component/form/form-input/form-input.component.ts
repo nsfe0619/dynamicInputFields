@@ -47,6 +47,31 @@ export class FormInputComponent implements OnInit, OnChanges
         this.destroy$.complete();
     }
 
+    // 取得該區域欄位列表
+    getGroupList(group: FormGroup)
+    {
+        let Result = Object.keys(group.value).map(obj =>
+        {
+            let innerControl = group.get(obj)
+            if (innerControl.value !== null && typeof innerControl.value === 'object' && this.getColumnSettingByName(obj)?.inputType !== 'checkbox')
+            {
+                return innerControl
+            } else 
+            {
+                return obj;
+            }
+        });
+        return Result;
+    }
+
+    getColumnSettingByName(name): ColumnSetting
+    {
+        // if (['title', 'type', 'isOpen'].find(n => n === name)) return;
+        const fs = this.innerColumnSettings.find(f => f.name == name);
+        // console.log(name, fs);
+        return fs || { group1: null, group2: null, group3: null } as ColumnSetting;
+    }
+
     private initByColumnSetting()
     {
         if (this.formSetting.isInputMode != false)

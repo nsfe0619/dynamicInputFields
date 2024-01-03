@@ -1,1 +1,20 @@
-<app-column [formSetting]="formSetting"></app-column>
+
+<form [formGroup]="innerForm">
+    <ng-container *ngFor="let group1 of getGroupList(innerForm)">
+        <div class="Block_box" [formGroup]="group1">
+            <div class="title">
+                <p class="l">
+                    {{getInnerControl(group1,'title').value}}</p>
+                <p class="r">
+                    <span class="switch" [ngClass]="getInnerControl(group1,'isOpen').value ? '' : 'focus'"
+                        (click)="setIsOpen(group1)"></span>
+                </p>
+            </div>
+            <div class="stretch_box" [ngClass]="getInnerControl(group1,'isOpen').value ? '' : 'hidden'">
+                <div [ngClass]="formSetting?.isInputMode!=false ? 'label_form' : 'Field_box'">
+                    <app-column [formSetting]="formSetting"></app-column>
+                    </div>
+                    </div>
+                    </div>
+                    </ng-container>
+                    </form>
